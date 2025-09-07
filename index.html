@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Nazmul Islam | Mechanical Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #112240;
+            --accent: #64ffda;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+            --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+            --progress-color: #ffffff;
+        }
+        
+        /* Light mode variables - ORANGE THEME */
+        [data-theme="light"] {
+            --primary: #fff5e6;
+            --secondary: #ffe4cc;
+            --accent: #ff8c00;
+            --text-primary: #000000; /* Changed to pure black */
+            --text-secondary: #333333; /* Darker for better contrast */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Calibre', 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
+            background-color: var(--primary);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        .loading-logo {
+            width: 120px;
+            height: 128px;
+        }
+        
+        .loading-logo .cell { 
+            fill: transparent; /* Changed from white to transparent */
+            opacity: 0; 
+            transform-origin: center; 
+        }
+        
+        .loading-logo .black { 
+            fill: #ff8c00; 
+        }
+        
+        .loading-logo .show { 
+            animation: fadeScale 1s cubic-bezier(.22,1,.36,1) forwards; 
+        }
+        
+        .loading-logo .delay-1{ animation-delay:0s; }
+        .loading-logo .delay-2{ animation-delay:.4s; }
+        .loading-logo .delay-3{ animation-delay:.8s; }
+        .loading-logo .delay-4{ animation-delay:1.2s; }
+        .loading-logo .delay-5{ animation-delay:1.6s; }
+        .loading-logo .delay-6{ animation-delay:2.0s; }
+        
+        @keyframes fadeScale {
+            from{ opacity:0; transform:scale(0.9); }
+            50%{ opacity:1; transform:scale(1.02); }
+            to{ opacity:1; transform:scale(1); }
+        }
+        
+        .loading-logo .diag { 
+            fill:none; 
+            stroke:#ff8c00; 
+            stroke-width:5; 
+            stroke-linecap:round; 
+            stroke-linejoin:round; 
+            stroke-dasharray:400; 
+            stroke-dashoffset:400; 
+            opacity:0; 
+        }
+        
+        .loading-logo .draw1{ animation: draw 1s ease forwards; animation-delay:.7s; }
+        .loading-logo .draw2{ animation: draw 1s ease forwards; animation-delay:1.3s; }
+        .loading-logo .draw3{ animation: draw 1s ease forwards; animation-delay:1.9s; }
+        .loading-logo .draw4{ animation: draw 1s ease forwards; animation-delay:2.5s; }
+        
+        @keyframes draw { 
+            to{ stroke-dashoffset:0; opacity:1; } 
+        }
+        
+        .loading-logo .grid { 
+            fill:none; 
+            stroke:#ff8c00; 
+            stroke-width:4; 
+            stroke-linecap:round; 
+            stroke-linejoin:round; 
+            stroke-dasharray:900; 
+            stroke-dashoffset:900; 
+            animation: drawGrid 1.2s ease forwards; 
+            animation-delay:.3s; 
+        }
+        
+        @keyframes drawGrid { 
+            to{ stroke-dashoffset:0; } 
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 90px;
+            right: 30px;
+            z-index: 1000;
+            background-color: var(--secondary);
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .theme-toggle i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+        
+        [data-theme="light"] header {
+            background-color: rgba(255, 245, 230, 0.85);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            height: 30px;
+            width: 30px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+        
+        .logo-img .cell { fill: transparent; } /* Changed from white to transparent */
+        .logo-img .black { fill: var(--accent); }
+        .logo-img .diag { 
+            fill: none; 
+            stroke: var(--accent); 
+            stroke-width: 5; 
+            stroke-linecap: round; 
+            stroke-linejoin: round; 
+        }
+        .logo-img .grid { 
+            fill: none; 
+            stroke: var(--text-secondary); 
+            stroke-width: 4; 
+            stroke-linecap: round; 
+            stroke-linejoin: round; 
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 100px 20px 40px;
+                transition: right 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: opacity 0.4s ease, transform 0.4s ease;
+            }
+            
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            
+            .nav-links.active li:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.15s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.2s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.25s; }
+            .nav-links.active li:nth-child(5) { transition-delay: 0.3s; }
+            .nav-links.active li:nth-child(6) { transition-delay: 0.35s; }
+            
+            .menu-btn {
+                display: block;
+            }
+            
+            .menu-btn.active i::before {
+                content: '\f00d'; /* Change to close icon */
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 70px;
+        }
+        
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .hero-subtitle {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        
+        .hero-designation {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            min-height: 2.5rem;
+        }
+        
+        .hero-description {
+            max-width: 540px;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 1.75rem;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            cursor: pointer;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        [data-theme="light"] .btn:hover {
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+        
+        /* Sections */
+        section {
+            padding: 6rem 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 3rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(140px, 200px));
+            gap: 0.5rem;
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        
+        .skills-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .skills-list li:before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        .about-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .profile-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+        
+        /* Experience Section */
+        .experience-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-left: 2px solid var(--secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+        }
+        
+        .tab:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+        }
+        
+        [data-theme="light"] .tab:hover {
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+        
+        .tab.active {
+            border-left: 2px solid var(--accent);
+            color: var(--accent);
+            background-color: rgba(100, 255, 218, 0.1);
+        }
+        
+        [data-theme="light"] .tab.active {
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .job-title {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .job-date {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .job-duties {
+            list-style: none;
+        }
+        
+        .job-duties li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .job-duties li:before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: var(--secondary);
+            border-radius: 4px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-title {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .project-description {
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-tag {
+            font-size: 0.75rem;
+            color: var(--accent);
+            padding: 0.25rem 0.5rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            background-color: rgba(100, 255, 218, 0.1);
+            border-radius: 4px;
+        }
+        
+        [data-theme="light"] .project-tag {
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+        
+        /* Contact Section */
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-text {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-right: 1rem;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .contact-details h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+        }
+        
+        .contact-details p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .availability {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: rgba(100, 255, 218, 0.1);
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        [data-theme="light"] .availability {
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            margin-right: 1rem;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(100, 255, 218, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(100, 255, 218, 0);
+            }
+        }
+        
+        [data-theme="light"] .status-dot {
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+            animation: pulse-light 2s infinite;
+        }
+        
+        @keyframes pulse-light {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 140, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 140, 0, 0);
+            }
+        }
+        
+        .availability p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 25, 47, 0.95);
+            z-index: 2000;
+            overflow: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        [data-theme="light"] .modal {
+            background-color: rgba(255, 245, 230, 0.95);
+        }
+        
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 4px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-btn:hover {
+            color: var(--accent);
+        }
+        
+        /* Form Styles */
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        
+        .form-label {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-input, .form-textarea {
+            background-color: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--text-secondary);
+            border-radius: 4px;
+            color: var(--text-primary);
+            padding: 0.75rem;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        [data-theme="light"] .form-input,
+        [data-theme="light"] .form-textarea {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
+        }
+        
+        [data-theme="light"] .form-input:focus,
+        [data-theme="light"] .form-textarea:focus {
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            background-color: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .form-submit:hover {
+            background-color: rgba(100, 255, 218, 0.8);
+            transform: translateY(-3px);
+        }
+        
+        [data-theme="light"] .form-submit {
+            color: white;
+        }
+        
+        [data-theme="light"] .form-submit:hover {
+            background-color: rgba(230, 115, 0, 0.9);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .social-links li {
+            margin: 0 1rem;
+        }
+        
+        .social-links a {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        /* File Download Buttons */
+        .file-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .file-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .file-btn:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+        }
+        
+        [data-theme="light"] .file-btn:hover {
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        [data-theme="light"] .back-to-top {
+            color: white;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .experience-tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-left: none;
+                border-bottom: 2px solid var(--secondary);
+            }
+            
+            .tab.active {
+                border-left: none;
+                border-bottom: 2px solid var(--accent);
+            }
+            
+            .profile-img {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .theme-toggle {
+                top: 80px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Enhanced Typing Animation */
+        .typing-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .typing-text {
+            display: inline;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--accent);
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Success message for form submission */
+        .form-success {
+            display: none;
+            background-color: rgba(100, 255, 218, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+        
+        [data-theme="light"] .form-success {
+            background-color: rgba(255, 140, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
+                <!-- rectangles -->
+                <rect class="cell black show delay-1" x="0" y="0" width="100" height="160" />
+                <rect class="cell show delay-2" x="100" y="0" width="100" height="160" />
+                <rect class="cell show delay-3" x="200" y="0" width="100" height="160" />
+                <rect class="cell show delay-4" x="0" y="160" width="100" height="160" />
+                <rect class="cell show delay-5" x="100" y="160" width="100" height="160" />
+                <rect class="cell show delay-6" x="200" y="160" width="100" height="160" />
+
+                <!-- diagonals for the N -->
+                <path class="diag draw1" d="M0 160 L100 320" />
+                <path class="diag draw2" d="M100 0 L200 160" />
+                <path class="diag draw3" d="M100 160 L200 320" />
+                <path class="diag draw4" d="M200 0 L300 160" />
+
+                <!-- grid trimmed: top and bottom lines only at edges, NOT across middle column -->
+                <path class="grid" d="M0 0 L100 0 M200 0 L300 0 M0 320 L100 320 M200 320 L300 320 M0 0 L0 320 M100 0 L100 320 M200 0 L200 320 M300 0 L300 320 M0 160 L300 160" />
+            </svg>
+        </div>
+    </div>
+    
+    <div id="particles-js"></div>
+    
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <svg class="logo-img" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
+                    <rect class="cell black" x="0" y="0" width="100" height="160" />
+                    <rect class="cell" x="100" y="0" width="100" height="160" />
+                    <rect class="cell" x="200" y="0" width="100" height="160" />
+                    <rect class="cell" x="0" y="160" width="100" height="160" />
+                    <rect class="cell" x="100" y="160" width="100" height="160" />
+                    <rect class="cell" x="200" y="160" width="100" height="160" />
+                    <path class="diag" d="M0 160 L100 320" />
+                    <path class="diag" d="M100 0 L200 160" />
+                    <path class="diag" d="M100 160 L200 320" />
+                    <path class="diag" d="M200 0 L300 160" />
+                    <path class="grid" d="M0 0 L100 0 M200 0 L300 0 M0 320 L100 320 M200 320 L300 320 M0 0 L0 320 M100 0 L100 320 M200 0 L200 320 M300 0 L300 320 M0 160 L300 160" />
+                </svg>
+                Nazmul
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#education"><i class="fas fa-graduation-cap"></i> Education</a></li>
+                <li><a href="#experience"><i class="fas fa-briefcase"></i> Experience</a></li>
+                <li><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="#publications"><i class="ai ai-google-scholar"></i> Publications</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+            <button class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="container hero-content">
+            <p class="hero-subtitle fade-in">Hi, my name is</p>
+            <h1 class="hero-title fade-in">Md Nazmul Islam.</h1>
+            <h2 class="hero-designation fade-in">
+                <span class="typing-container">
+                    <span id="typing-text"></span>
+                    <span class="cursor"></span>
+                </span>
+            </h2>
+            <p class="hero-description fade-in">
+                Passionate Mechanical Engineering graduate with strong interests in composite materials, 
+                computational mechanics, and advanced manufacturing technologies.
+            </p>
+            <div class="fade-in">
+                <a href="#contact" class="btn" id="contact-btn">Get In Touch</a>
+                <a href="files/cv.pdf" target="_blank" class="btn">Curriculum Vitae</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title fade-in"><i class="fas fa-user"></i> About Me</h2>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p>
+                        I am a passionate Mechanical Engineering graduate with strong interests in composite materials, 
+                        computational mechanics, and advanced manufacturing technologies. I aim to explore the mechanical 
+                        behavior of engineered materials and structures through a combination of simulation, CAD/CAM design, 
+                        and experimental validation.
+                    </p>
+                    <p>
+                        My goal is to contribute to research that enhances structural reliability, material efficiency, 
+                        and sustainability, while bridging the gap between theory and practical engineering applications.
+                    </p>
+                    <p>Here are a few technologies I've been working with recently:</p>
+                    <ul class="skills-list">
+                        <li>SolidWorks</li>
+                        <li>AutoCAD</li>
+                        <li>ABAQUS</li>
+                        <li>ANSYS</li>
+                        <li>Python</li>
+                        <li>MATLAB</li>
+                        <li>Composite Materials</li>
+                        <li>Finite Element Analysis</li>
+                    </ul>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Md Nazmul Islam" class="profile-img">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="education" class="education">
+        <div class="container">
+            <h2 class="section-title fade-in"><i class="fas fa-graduation-cap"></i> Education</h2>
+            <div class="experience-tabs">
+                <button class="tab active" data-target="bsc">B.Sc. Mechanical Engineering</button>
+                <button class="tab" data-target="training">Training & Certifications</button>
+                <button class="tab" data-target="scores">Test Scores</button>
+            </div>
+            
+            <div id="bsc" class="tab-content active">
+                <h3 class="job-title">Khulna University of Engineering & Technology (KUET), Khulna, Bangladesh</h3>
+                <p class="job-date">2017 – 2022 | CGPA: 3.45 / 4.00 (Last 2 years: 3.49)</p>
+                <p><strong>Thesis:</strong> Computational Study of Multi-layer Printed Circuit Boards Under Bending Load</p>
+                <ul class="job-duties">
+                    <li>Specialized in mechanical engineering with focus on composite materials and computational mechanics</li>
+                    <li>Completed 161 credits with strong performance in core mechanical engineering subjects</li>
+                    <li>Conducted research on PCB bending behavior using finite element analysis</li>
+                </ul>
+                
+                <div class="file-buttons">
+                    <a href="files/transcript.pdf" target="_blank" class="file-btn">
+                        <i class="fas fa-eye"></i> See Transcripts
+                    </a>
+                </div>
+            </div>
+            
+            <div id="training" class="tab-content">
+                <h3 class="job-title">Professional Training & Certifications</h3>
+                <ul class="job-duties">
+                    <li>Training in AutoCAD, SolidWorks – CADers, KUET</li>
+                    <li>Programming & Introduction to Robotics Workshop – LOOP, KUET (2018)</li>
+                    <li>Training in CNC, CAM & 3D Printing – Academic</li>
+                    <li>Introduction to Programming with MATLAB – Vanderbilt University (Coursera, 2020)</li>
+                    <li>Excel Skills for Business (Essential to Advanced) – Macquarie University (Coursera, 2020)</li>
+                </ul>
+            </div>
+            
+            <div id="scores" class="tab-content">
+                <h3 class="job-title">Language and Graduate Test Scores</h3>
+                <p><strong>IELTS:</strong> Overall: 6.5 | Listening: 7.5 | Reading: 7.5 | Writing: 6.0 | Speaking: 5.5</p>
+                <p><strong>GRE:</strong> Total: 296 | Quantitative: 157 | Verbal: 139 | Analytical Writing: 2.5</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title fade-in"><i class="fas fa-briefcase"></i> Post-Graduation Activities</h2>
+            <div class="job">
+                <h3 class="job-title">Research & Skill Development</h3>
+                <p class="job-date">2022 – PRESENT</p>
+                <ul class="job-duties">
+                    <li>Conducted research on composite materials and PCB bending, resulting in one peer-reviewed paper (Hybrid Advances, 2023)</li>
+                    <li>Enhanced expertise in CAD (SolidWorks, AutoCAD), simulation (ABAQUS), and programming (Python, MATLAB, C)</li>
+                    <li>Completed IELTS and GRE examinations as part of graduate school application requirements</li>
+                </ul>
+            </div>
+            
+            <h2 class="section-title fade-in" style="margin-top: 4rem;"><i class="fas fa-industry"></i> Professional & Industrial Activities</h2>
+            <ul class="job-duties">
+                <li>Industrial Visit to Port of Chittagong, Bangladesh – Familiarized with port material handling technologies (December 2021)</li>
+                <li>Industrial Visit to Chittagong Dry Dock Ltd, Bangladesh – A shipbuilding and repair facility operated by the Bangladesh Navy (December 2021)</li>
+                <li>Industrial Visit to Eastern Refinery Ltd, Bangladesh – Familiarized with techniques and technologies of crude oil processing (December 2021)</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title fade-in"><i class="fas fa-project-diagram"></i> Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <h3 class="project-title">Design and Fabrication of Manual Die-cutting Machine</h3>
+                    <p class="project-description">
+                        This project involves the design, analysis, and fabrication of a low-cost, hand-operated die-cutting machine for small-scale applications.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Mechanical Design</span>
+                        <span class="project-tag">Fabrication</span>
+                        <span class="project-tag">CAD</span>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in">
+                    <h3 class="project-title">Computational Study of Multi-layer PCBs</h3>
+                    <p class="project-description">
+                        Finite element analysis of the bending behavior of multi-layer printed circuit boards, highlighting the effect of ply orientation and lamina thickness.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">FEA</span>
+                        <span class="project-tag">ABAQUS</span>
+                        <span class="project-tag">Composite Materials</span>
+                    </div>
+                </div>
+                
+                <div class="project-card fade-in">
+                    <h3 class="project-title">Bending Analysis of Composite Laminates</h3>
+                    <p class="project-description">
+                        Research on glass fiber reinforced epoxy composites/copper-clad laminates for multi-layer printed circuit boards.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Research</span>
+                        <span class="project-tag">Composites</span>
+                        <span class="project-tag">Simulation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="publications" class="publications">
+        <div class="container">
+            <h2 class="section-title fade-in"><i class="ai ai-google-scholar"></i> Publications</h2>
+            <div class="project-card fade-in">
+                <h3 class="project-title">Bending analysis of glass fiber reinforced epoxy composites/copper-clad laminates for multi-layer printed circuit boards</h3>
+                <p class="project-description">
+                    <strong>Authors:</strong> Islam, M.N., Anwar, M.S., Islam, M.S., Arifuzzaman, M., and Al Bari, M.A., 2023.
+                    <br>
+                    <strong>Journal:</strong> Hybrid Advances, 4, p.100090.
+                </p>
+                <p class="project-description">
+                    This study provides a finite element analysis of the bending behavior of multi-layer printed circuit boards, 
+                    highlighting the effect of ply orientation and lamina thickness on mechanical performance.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">Published</span>
+                    <span class="project-tag">Peer-Reviewed</span>
+                    <span class="project-tag">FEA</span>
+                    <span class="project-tag">PCB</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://doi.org/10.1016/j.hybadv.2023.100090" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title fade-in"><i class="fas fa-envelope"></i> Get In Touch</h2>
+            <div class="contact-content">
+                <p class="contact-text fade-in">
+                    I'm currently exploring opportunities for graduate studies and research positions in the field of 
+                    mechanical engineering, particularly those focused on composite materials, computational mechanics, 
+                    and advanced manufacturing. Feel free to reach out if you'd like to discuss potential collaborations 
+                    or opportunities.
+                </p>
+                
+                <div class="availability fade-in">
+                    <div class="status-dot"></div>
+                    <p>Available for research opportunities</p>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>nazmul.759293@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Phone</h3>
+                            <p>+8801766759293</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Location</h3>
+                            <p>Sirajganj, Bangladesh</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="btn fade-in" id="say-hello-btn">Say Hello</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <ul class="social-links">
+                <li><a href="https://www.linkedin.com/in/md-nazmul-islam-b51478265" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="https://github.com/Nazmul9293/nazmul" target="_blank"><i class="fab fa-github"></i></a></li>
+                <li><a href="https://scholar.google.com" target="_blank"><i class="ai ai-google-scholar"></i></a></li>
+                <li><a href="https://www.google.com/maps/place/24°28'06.4%22N+89°41'02.2%22E" target="_blank"><i class="fas fa-map-marker-alt"></i></a></li>
+            </ul>
+            <p>Designed & Built by Md Nazmul Islam</p>
+            <p>© 2023 All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-modal">&times;</button>
+            <h2 style="margin-bottom: 1.5rem; color: var(--text-primary);">Get In Touch</h2>
+            <form class="contact-form" id="contact-form" action="https://formspree.io/f/xblaknpg" method="POST">
+                <input type="hidden" name="_subject" value="New message from portfolio contact form">
+                <input type="hidden" name="_replyto" value="nazmul.759293@gmail.com">
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Your Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" name="message" class="form-textarea" required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Send Message</button>
+                
+                <div class="form-success" id="form-success">
+                    <i class="fas fa-check-circle"></i> Thank you for your message! I'll get back to you soon.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Loading screen functionality
+        window.addEventListener('load', function() {
+            // Wait for the loading animation to complete (about 3.5 seconds)
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.visibility = 'hidden';
+                
+                // Start the typing animation after page loads
+                setTimeout(type, 1000);
+            }, 3500);
+        });
+
+        // Create a dynamic favicon with correct N shape and orange color
+        function createFavicon() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 32;
+            canvas.height = 32;
+            const ctx = canvas.getContext('2d');
+            
+            // Make background transparent
+            ctx.clearRect(0, 0, 32, 32);
+            
+            // Draw the "N" logo in orange
+            ctx.fillStyle = '#ff8c00';
+            
+            // Left vertical bar
+            ctx.fillRect(4, 4, 6, 24);
+            
+            // Right vertical bar
+            ctx.fillRect(22, 4, 6, 24);
+            
+            // Diagonal bar (corrected direction)
+            ctx.beginPath();
+            ctx.moveTo(4, 28);
+            ctx.lineTo(22, 4);
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#ff8c00';
+            ctx.stroke();
+            
+            // Second diagonal bar
+            ctx.beginPath();
+            ctx.moveTo(10, 28);
+            ctx.lineTo(28, 4);
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#ff8c00';
+            ctx.stroke();
+            
+            // Create favicon link
+            const favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            favicon.href = canvas.toDataURL('image/png');
+            document.head.appendChild(favicon);
+        }
+        
+        // Call the function to create the favicon
+        createFavicon();
+
+        // Mobile menu toggle with animation
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+            
+            // Toggle body scroll when menu is open
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuBtn.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-target');
+                
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+        
+        // Scroll animations
+        const faders = document.querySelectorAll('.fade-in');
+        
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -100px 0px"
+        };
+        
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('appear');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+        
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+        
+        // Particle background
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#64ffda"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#64ffda",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                    menuBtn.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+        
+        // Modal functionality
+        const modal = document.getElementById('contact-modal');
+        const sayHelloBtn = document.getElementById('say-hello-btn');
+        const contactBtn = document.getElementById('contact-btn');
+        const closeModal = document.getElementById('close-modal');
+        const contactForm = document.getElementById('contact-form');
+        const formSuccess = document.getElementById('form-success');
+        
+        function openModal() {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModalFunc() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        sayHelloBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal();
+        });
+        
+        contactBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal();
+        });
+        
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+        
+        // Form submission handling
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple form validation
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (!name || !email || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Submit the form using Formspree
+            const formData = new FormData(contactForm);
+            
+            fetch('https://formspree.io/f/xblaknpg', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show success message
+                    formSuccess.style.display = 'block';
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        formSuccess.style.display = 'none';
+                        closeModalFunc();
+                    }, 5000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                alert('There was a problem sending your message. Please try again later.');
+                console.error('Error:', error);
+            });
+        });
+        
+        // Enhanced typing effect
+        const texts = [
+            "Mechanical Engineer",
+            "CAD & FEA Specialist",
+            "Composite Materials Researcher"
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingDelay = 100;
+        let deletingDelay = 50;
+        let pauseDelay = 2000;
+        
+        function type() {
+            const currentText = texts[textIndex];
+            const typingElement = document.getElementById('typing-text');
+            
+            if (isDeleting) {
+                // Remove characters
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingDelay = deletingDelay;
+            } else {
+                // Add characters
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingDelay = 100;
+            }
+            
+            // Check if we've finished with the current text
+            if (!isDeleting && charIndex === currentText.length) {
+                // Pause at the end of typing
+                typingDelay = pauseDelay;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                // Move to next text
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typingDelay = 500; // Pause before starting next text
+            }
+            
+            setTimeout(type, typingDelay);
+        }
+        
+        // Back to top functionality
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        function updateProgress() {
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollPercent = scrollTop / (scrollHeight - clientHeight) * 100;
+            
+            // Show/hide back to top button
+            if (scrollPercent > 5) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        }
+        
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        backToTopButton.addEventListener('click', scrollToTop);
+        window.addEventListener('scroll', updateProgress);
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or respect OS preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        
+        if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            
+            // Update particles for light theme
+            updateParticlesForTheme('light');
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
+                updateParticlesForTheme('dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
+                updateParticlesForTheme('light');
+            }
+        });
+        
+        // Function to update particles based on theme
+        function updateParticlesForTheme(theme) {
+            const particles = window.pJSDom[0].pJS;
+            
+            if (theme === 'light') {
+                particles.particles.color.value = '#ff8c00'; // Orange for light mode
+                particles.particles.line_linked.color = '#ff8c00';
+                particles.particles.opacity.value = 0.8; // More visible in light mode
+            } else {
+                particles.particles.color.value = '#64ffda'; // Teal for dark mode
+                particles.particles.line_linked.color = '#64ffda';
+                particles.particles.opacity.value = 0.5;
+            }
+            
+            particles.fn.particlesRefresh();
+        }
+    </script>
+</body>
+</html>
